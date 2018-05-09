@@ -14,26 +14,18 @@ var activePlayer = 0;
 var currentScores = [0,0];
 var scores = [0,0];
 
-var $dice = document.querySelector('.dice');
-var $current1 = document.querySelector('#current-1');
-var $current0 = document.querySelector('#current-0');
-var $score1 = document.querySelector('#score-1');
-var $score0 = document.querySelector('#score-0');
-
-$dice.style.display = 'none';
-$current1.textContent = '0';
-$current0.textContent = '0';
-$score1.textContent = '0';
-$score0.textContent = '0';
+document.querySelector('.dice').style.display = 'none';
+document.querySelector('#current-1').textContent = '0';
+document.querySelector('#current-0').textContent = '0';
+document.querySelector('#score-1').textContent = '0';
+document.querySelector('#score-0').textContent = '0';
 
 document.querySelector('.btn-roll').addEventListener('click', function(){
-	
 	var randomNumber = Math.floor(Math.random() *6) + 1;
 
-	$dice.style.display = 'block';
+	document.querySelector('.dice').style.display = 'block';
 	document.querySelector('.dice').src = 'dice-' + randomNumber + '.png';
 	if (randomNumber === 1) {
-		resetScoreFor(activePlayer);
 		changePlayer();
 	} else {
 		currentScores[activePlayer] += randomNumber;
@@ -45,7 +37,7 @@ document.querySelector('.btn-hold').addEventListener('click', function() {
 	scores[activePlayer] += currentScores[activePlayer];
 	document.querySelector('#score-'+activePlayer).textContent = scores[activePlayer];
 
-	if (scores[activePlayer] >= 20){
+	if (scores[activePlayer] >= 100){
 		document.querySelector('#name-'+activePlayer).textContent = 'Winner!';
 		document.querySelector('.dice').style.display = 'none';
 		document.querySelector('.player-'+activePlayer+'-panel').classList.remove('active');
@@ -75,8 +67,7 @@ function setDisplayButtons (display) {
 }
 
 function changePlayer(){
-	document.querySelector('#current-'+activePlayer).textContent = 0;
-	currentScores[activePlayer] = 0;
+	resetScoreFor(activePlayer);
 	activePlayer = activePlayer === 0? 1:0;
 	document.querySelector('.dice').style.display = 'none';
 	document.querySelector('.player-0-panel').classList.toggle('active');
@@ -84,8 +75,6 @@ function changePlayer(){
 }
 
 function resetScoreFor(activePlayer){
-	scores[activePlayer] = 0;
 	currentScores[activePlayer] = 0;
-	document.querySelector('#score-'+activePlayer).textContent = 0;
 	document.querySelector('#current-'+activePlayer).textContent = 0;
 }
