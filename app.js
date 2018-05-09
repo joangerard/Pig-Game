@@ -8,17 +8,9 @@ GAME RULES:
 - The first player to reach 100 points on GLOBAL score wins the game
 
 */
+var activePlayer, currentScores, scores;
 
-
-var activePlayer = 0;
-var currentScores = [0,0];
-var scores = [0,0];
-
-document.querySelector('.dice').style.display = 'none';
-document.querySelector('#current-1').textContent = '0';
-document.querySelector('#current-0').textContent = '0';
-document.querySelector('#score-1').textContent = '0';
-document.querySelector('#score-0').textContent = '0';
+init();
 
 document.querySelector('.btn-roll').addEventListener('click', function(){
 	var randomNumber = Math.floor(Math.random() *6) + 1;
@@ -50,15 +42,15 @@ document.querySelector('.btn-hold').addEventListener('click', function() {
 
 document.querySelector('.btn-new').addEventListener('click', function() {
 	resetPlayerNames();
-	resetScoreFor(0);
-	resetScoreFor(1);
+	init();
 	setDisplayButtons('block');
 });
 
 function resetPlayerNames () {
 	document.querySelector('#name-'+activePlayer).textContent = 'Player '+(activePlayer+1);
-	document.querySelector('.player-'+activePlayer+'-panel').classList.remove('winner');
-	document.querySelector('.player-'+activePlayer+'-panel').classList.add('active');
+	document.querySelector('.player-0-panel').classList.remove('winner');
+	document.querySelector('.player-1-panel').classList.remove('winner');
+	document.querySelector('.player-0-panel').classList.add('active');
 }
 
 function setDisplayButtons (display) {
@@ -77,4 +69,16 @@ function changePlayer(){
 function resetScoreFor(activePlayer){
 	currentScores[activePlayer] = 0;
 	document.querySelector('#current-'+activePlayer).textContent = 0;
+}
+
+function init() {
+	activePlayer = 0;
+	currentScores = [0,0];
+	scores = [0,0];
+
+	document.querySelector('.dice').style.display = 'none';
+	document.querySelector('#current-1').textContent = '0';
+	document.querySelector('#current-0').textContent = '0';
+	document.querySelector('#score-1').textContent = '0';
+	document.querySelector('#score-0').textContent = '0';
 }
